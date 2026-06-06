@@ -1,0 +1,51 @@
+{
+  "entities": {
+    "Project": {
+      "title": "Project",
+      "description": "Represents a selected custom project dynamically overriding default data",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique ID matching the static data id or a custom one"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the project"
+        },
+        "category": {
+          "type": "string",
+          "description": "The custom portfolio category for the project"
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "The full secure URL of the image stored in Firebase Storage"
+        },
+        "description": {
+          "type": "string",
+          "description": "Project descriptive text or summary"
+        },
+        "link": {
+          "type": "string",
+          "description": "External project link details"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Firebase server timestamp"
+        },
+        "updatedBy": {
+          "type": "string",
+          "description": "User UID who made the update"
+        }
+      },
+      "required": ["id", "title", "category", "imageUrl", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "projects/{projectId}": {
+      "schema": "Project",
+      "description": "Customized projects database matching custom images and copy"
+    }
+  }
+}
