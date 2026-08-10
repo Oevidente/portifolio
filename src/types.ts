@@ -3,10 +3,18 @@ export type Category = 'UI/UX Design' | 'Identidade Visual' | 'Social Media' | '
 export interface Project {
   id: string;
   title: string;
+  subtitle?: string;
   category: Category;
   imageUrl: string;
   description?: string;
+  fullDescription?: string;
+  highlights?: string[];
+  tags?: string[];
+  badge?: string;
   link?: string;
+  uxCallout?: string;
+  gallery?: string[];
+  fromPhotos?: boolean;
 }
 
 export interface Service {

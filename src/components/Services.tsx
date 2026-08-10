@@ -17,11 +17,14 @@ export function Services() {
           </h2>
         </motion.div>
 
-        {/* Bento grid approach for services: col-span mixtures */}
-        <div className="grid grid-cols-1 md:grid-cols-12 grid-rows-none md:grid-rows-2 gap-4">
+        {/* Bento grid approach for services */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
           {services.map((service, idx) => {
             const Icon = service.icon;
-            const colSpan = idx === 0 ? "md:col-span-8" : idx === 1 ? "md:col-span-4" : idx === 2 ? "md:col-span-5" : "md:col-span-7";
+            // 5 items: Row 1 has 2 items (col-span-7, col-span-5), Row 2 has 3 items (col-span-4 each)
+            let colSpan = "md:col-span-4";
+            if (idx === 0) colSpan = "md:col-span-7";
+            else if (idx === 1) colSpan = "md:col-span-5";
             
             return (
               <motion.div
@@ -30,19 +33,19 @@ export function Services() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ delay: idx * 0.1, duration: 0.6 }}
-                className={`${colSpan} bg-[#111] border border-white/5 p-8 flex flex-col ${idx === 2 ? 'items-center text-center justify-center' : 'justify-between'} rounded-sm hover:border-white/20 transition-colors group relative overflow-hidden`}
+                className={`${colSpan} bg-[#111319] border border-white/10 hover:border-white/25 p-8 flex flex-col justify-between rounded-xl transition-all duration-300 group relative overflow-hidden`}
               >
-                {idx === 0 && <div className="absolute inset-0 bg-gradient-to-br from-zinc-800/20 to-transparent pointer-events-none" />}
+                {idx === 0 && <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-transparent pointer-events-none" />}
                 
-                <div className={`relative z-10 w-full ${idx === 2 ? 'flex flex-col items-center' : ''}`}>
-                  <div className={`w-12 h-12 border border-white/10 flex items-center justify-center text-white/80 mb-6 group-hover:bg-white group-hover:text-black transition-colors ${idx === 2 ? 'rotate-45' : 'rounded-sm'}`}>
-                    <div className={idx === 2 ? '-rotate-45' : ''}>
-                       <Icon size={20} strokeWidth={1.5} />
-                    </div>
+                <div className="relative z-10 w-full">
+                  <div className="w-12 h-12 border border-white/10 rounded-lg flex items-center justify-center text-white/80 mb-6 group-hover:bg-white group-hover:text-black transition-all">
+                    <Icon size={20} strokeWidth={1.5} />
                   </div>
-                  <span className="text-[9px] uppercase tracking-[0.3em] text-white/40 mb-2 block">{service.title}</span>
-                  <p className="text-sm text-white/60 leading-relaxed font-light mt-2 italic">
-                    "{service.description}"
+                  <span className="text-[10px] uppercase font-mono tracking-[0.2em] text-indigo-300 mb-1 block">
+                    {service.title}
+                  </span>
+                  <p className="text-sm text-white/70 leading-relaxed font-light mt-2">
+                    {service.description}
                   </p>
                 </div>
               </motion.div>

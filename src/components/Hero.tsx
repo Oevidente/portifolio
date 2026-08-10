@@ -32,7 +32,7 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="mt-8 text-sm md:text-base text-white/60 max-w-xl font-light leading-relaxed"
           >
-            Sou André Luiz Alves, criador de interfaces, identidades visuais e projetos gráficos. Combinando estética refinada e pragmatismo para elevar negócios.
+            Sou André Luiz Alves, Designer Gráfico e Digital (PJ / Freelancer). Desenvolvo landing pages, artes para capas de jogos, mídias sociais, identidades visuais e peças impressas para marcas e projetos de referência.
           </motion.p>
         </div>
         
