@@ -1,3 +1,5 @@
+import type React from 'react';
+
 // Google Drive API helper utility for uploading and organizing portfolio images
 
 /**
