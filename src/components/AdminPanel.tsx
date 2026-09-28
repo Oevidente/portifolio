@@ -505,12 +505,12 @@ export function AdminPanel({ onAdminStateChange, activeProjectToEdit, onCloseEdi
     visible: { 
       x: 0, 
       y: 0,
-      transition: { type: 'spring', damping: 28, stiffness: 220 }
+      transition: { type: 'spring' as const, damping: 28, stiffness: 220 }
     },
     exit: { 
       x: isMobile ? 0 : '100%', 
       y: isMobile ? '100%' : 0,
-      transition: { duration: 0.3, ease: 'easeInOut' }
+      transition: { duration: 0.3, ease: 'easeInOut' as const }
     }
   };
 

@@ -8,7 +8,7 @@ export function Footer() {
       </div>
       <div className="text-[10px] uppercase tracking-[0.2em] text-white/20 text-center md:text-right flex items-center justify-center md:justify-end gap-2">
         <span>© {new Date().getFullYear()} André Luiz — Crafted with Purpose</span>
-        <span className="text-[9px] px-1.5 py-0.5 rounded bg-white/5 text-white/30 border border-white/5 font-mono">v1.0.9-beta</span>
+        <span className="text-[9px] px-1.5 py-0.5 rounded bg-white/5 text-white/30 border border-white/5 font-mono">v1.0.10-beta</span>
       </div>
     </footer>
   );
