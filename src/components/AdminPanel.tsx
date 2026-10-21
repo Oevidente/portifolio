@@ -552,10 +552,10 @@ export function AdminPanel({ onAdminStateChange, activeProjectToEdit, onCloseEdi
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="relative w-full md:max-w-md h-[90vh] md:h-full bg-[#0d0e12]/95 backdrop-blur-2xl border-t md:border-t-0 md:border-l border-white/10 flex flex-col items-stretch shadow-2xl z-20 rounded-t-3xl md:rounded-t-none md:rounded-l-3xl overflow-hidden self-end md:self-auto"
+              className="relative w-full md:max-w-md h-[90vh] md:h-full minimal-glass border-t md:border-t-0 md:border-l border-white/10 flex flex-col items-stretch shadow-2xl z-20 rounded-t-3xl md:rounded-t-none md:rounded-l-3xl overflow-hidden self-end md:self-auto"
             >
               {/* Header */}
-              <div className="px-6 py-5 border-b border-white/5 flex items-center justify-between bg-[#13151b]/80 backdrop-blur-md">
+              <div className="px-6 py-5 border-b border-white/10 flex items-center justify-between minimal-glass-subtle">
                 <div className="flex items-center gap-3">
                   {currentProject ? (
                     <button
@@ -563,21 +563,21 @@ export function AdminPanel({ onAdminStateChange, activeProjectToEdit, onCloseEdi
                         setCurrentProject(null);
                         onCloseEdit();
                       }}
-                      className="p-1 px-2 -ml-2 rounded-lg hover:bg-white/5 text-white/50 hover:text-white transition-colors flex items-center gap-1 text-xs uppercase"
+                      className="p-1 px-2.5 -ml-2 rounded-xl minimal-glass-subtle hover:bg-white/10 text-white/70 hover:text-white transition-colors flex items-center gap-1.5 text-xs uppercase"
                     >
-                      <ArrowLeft size={16} />
+                      <ArrowLeft size={15} />
                       <span>Voltar</span>
                     </button>
                   ) : (
                     <>
-                      <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/80">
+                      <div className="w-8 h-8 rounded-full minimal-glass-subtle flex items-center justify-center text-white/80">
                         <Sparkles size={16} className={isAdmin ? "text-emerald-400" : "text-amber-400"} />
                       </div>
                       <div>
                         <h2 className="font-display font-light text-base tracking-tight text-white uppercase">
                           Painel do Autor
                         </h2>
-                        <p className="text-[9px] text-white/40 tracking-wider uppercase">Controles do Portfolio</p>
+                        <p className="text-[9px] text-white/40 tracking-wider uppercase">Controles do Portfólio</p>
                       </div>
                     </>
                   )}
@@ -586,7 +586,8 @@ export function AdminPanel({ onAdminStateChange, activeProjectToEdit, onCloseEdi
                 <button
                   disabled={isSyncing}
                   onClick={() => { setIsPanelOpen(false); setCurrentProject(null); onCloseEdit(); }}
-                  className="p-1.5 rounded-full hover:bg-white/5 text-white/50 hover:text-white transition-colors"
+                  className="p-1.5 rounded-full minimal-glass-subtle hover:bg-white/20 text-white/70 hover:text-white transition-colors"
+                  aria-label="Fechar painel"
                 >
                   <X size={18} />
                 </button>
@@ -608,8 +609,8 @@ export function AdminPanel({ onAdminStateChange, activeProjectToEdit, onCloseEdi
                 {!isAdmin ? (
                   /* Login Panel */
                   <div className="flex-1 flex flex-col items-center justify-center text-center p-6 gap-6">
-                    <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 mb-2">
-                      <Lock size={30} />
+                    <div className="w-16 h-16 rounded-2xl minimal-glass-subtle flex items-center justify-center text-white/40 mb-2">
+                      <Lock size={28} />
                     </div>
                     <div>
                       <h3 className="font-display text-lg font-light text-[#f0f0f0] uppercase tracking-wide">
@@ -623,10 +624,10 @@ export function AdminPanel({ onAdminStateChange, activeProjectToEdit, onCloseEdi
                     <button
                       onClick={handleGoogleLogin}
                       disabled={isAuthLoading}
-                      className="w-full max-w-xs h-12 flex items-center justify-center gap-3 bg-white text-black hover:bg-white/90 font-medium rounded-full text-xs uppercase tracking-wider transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg"
+                      className="w-full max-w-xs h-12 flex items-center justify-center gap-3 minimal-glass-button rounded-full text-xs font-semibold uppercase tracking-wider"
                     >
                       {isAuthLoading ? (
-                        <Loader2 size={16} className="animate-spin" />
+                        <Loader2 size={16} className="animate-spin text-black" />
                       ) : (
                         <>
                           <svg className="w-4 h-4" viewBox="0 0 24 24">
@@ -635,7 +636,7 @@ export function AdminPanel({ onAdminStateChange, activeProjectToEdit, onCloseEdi
                             <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22c-.62-.63-1.04-1.37-1.18-2.09z" />
                             <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.85 2.98c.87-2.6 3.3-4.53 6.16-4.53z" />
                           </svg>
-                          Identificar-se com o Google
+                          <span>Identificar-se com o Google</span>
                         </>
                       )}
                     </button>
@@ -706,10 +707,10 @@ export function AdminPanel({ onAdminStateChange, activeProjectToEdit, onCloseEdi
                               <button
                                 key={project.id}
                                 onClick={() => handleSelectProjectToEdit(project)}
-                                className="w-full p-3 rounded-2xl bg-[#12141c]/50 hover:bg-[#161822] border border-white/5 hover:border-white/10 text-left transition-all flex items-center justify-between group"
+                                className="w-full p-3 rounded-2xl minimal-glass minimal-glass-interactive text-left transition-all flex items-center justify-between group cursor-pointer"
                               >
                                 <div className="flex items-center gap-3 min-w-0">
-                                  <div className="w-12 h-12 rounded-lg overflow-hidden border border-white/10 shrink-0 bg-black">
+                                  <div className="w-12 h-12 rounded-xl overflow-hidden border border-white/10 shrink-0 bg-black">
                                     <img 
                                       referrerPolicy="no-referrer"
                                       src={getDriveImageUrl(project.imageUrl)} 
@@ -720,10 +721,10 @@ export function AdminPanel({ onAdminStateChange, activeProjectToEdit, onCloseEdi
                                   </div>
                                   <div className="min-w-0">
                                     <h4 className="text-xs font-medium text-white truncate max-w-[200px]">{project.title}</h4>
-                                    <p className="text-[9px] text-[#a5b4fc] uppercase tracking-wider mt-0.5">{project.category}</p>
+                                    <p className="text-[9px] text-white/50 uppercase tracking-wider mt-0.5">{project.category}</p>
                                   </div>
                                 </div>
-                                <div className="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center text-white/40 group-hover:text-white group-hover:bg-white/10 transition-all">
+                                <div className="w-7 h-7 rounded-full minimal-glass-subtle flex items-center justify-center text-white/40 group-hover:text-white group-hover:bg-white/10 transition-all">
                                   <ChevronRight size={14} />
                                 </div>
                               </button>
@@ -746,8 +747,8 @@ export function AdminPanel({ onAdminStateChange, activeProjectToEdit, onCloseEdi
                           <span>Voltar para Lista de Trabalhos</span>
                         </button>
 
-                        <div className="p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex gap-3 items-center">
-                          <div className="w-10 h-10 rounded-lg overflow-hidden border border-white/10 bg-black shrink-0">
+                        <div className="p-4 rounded-2xl minimal-glass-subtle flex gap-3 items-center">
+                          <div className="w-10 h-10 rounded-xl overflow-hidden border border-white/10 bg-black shrink-0">
                             <img 
                               referrerPolicy="no-referrer"
                               src={previewUrl || getDriveImageUrl(currentProject.imageUrl)} 
@@ -757,7 +758,7 @@ export function AdminPanel({ onAdminStateChange, activeProjectToEdit, onCloseEdi
                             />
                           </div>
                           <div>
-                            <span className="text-[8px] uppercase tracking-widest text-[#a5b4fc] block">Trabalho sob edição</span>
+                            <span className="text-[8px] uppercase tracking-widest text-white/50 block">Trabalho sob edição</span>
                             <h4 className="text-xs font-semibold text-white truncate max-w-[240px]">{currentProject.title}</h4>
                           </div>
                         </div>
@@ -771,7 +772,7 @@ export function AdminPanel({ onAdminStateChange, activeProjectToEdit, onCloseEdi
                               value={editTitle}
                               onChange={(e) => setEditTitle(e.target.value)}
                               placeholder="Indique o título do projeto"
-                              className="w-full h-11 bg-white/5 border border-white/10 rounded-xl px-4 text-xs text-white focus:outline-none focus:border-indigo-500/50 transition-all"
+                              className="w-full h-11 minimal-glass-subtle rounded-xl px-4 text-xs text-white focus:outline-none focus:border-white/30 transition-all"
                             />
                           </div>
 
@@ -780,7 +781,7 @@ export function AdminPanel({ onAdminStateChange, activeProjectToEdit, onCloseEdi
                             <select 
                               value={editCategory}
                               onChange={(e) => setEditCategory(e.target.value as Category)}
-                              className="w-full h-11 bg-white/5 border border-white/10 rounded-xl px-3 text-xs text-white focus:outline-none focus:border-indigo-500/50 transition-all appearance-none cursor-pointer"
+                              className="w-full h-11 minimal-glass-subtle rounded-xl px-3 text-xs text-white focus:outline-none focus:border-white/30 transition-all appearance-none cursor-pointer"
                             >
                               <option value="UI/UX Design" className="bg-[#0e1015] text-white">UI/UX Design</option>
                               <option value="Identidade Visual" className="bg-[#0e1015] text-white">Identidade Visual</option>
@@ -795,7 +796,7 @@ export function AdminPanel({ onAdminStateChange, activeProjectToEdit, onCloseEdi
                               value={editDescription}
                               onChange={(e) => setEditDescription(e.target.value)}
                               placeholder="Descreva brevemente o projeto ou soluções desenvolvidas..."
-                              className="w-full h-24 bg-white/5 border border-white/10 rounded-xl p-4 text-xs text-white focus:outline-none focus:border-indigo-500/50 transition-all resize-none font-light leading-relaxed"
+                              className="w-full h-24 minimal-glass-subtle rounded-xl p-4 text-xs text-white focus:outline-none focus:border-white/30 transition-all resize-none font-light leading-relaxed"
                             />
                           </div>
 
@@ -966,14 +967,14 @@ export function AdminPanel({ onAdminStateChange, activeProjectToEdit, onCloseEdi
                         </div>
 
                         {/* Form actions */}
-                        <div className="flex gap-3 pt-4 border-t border-white/5">
+                        <div className="flex gap-3 pt-4 border-t border-white/10">
                           <button
                             type="button"
                             onClick={() => {
                               setCurrentProject(null);
                               onCloseEdit();
                             }}
-                            className="flex-1 h-11 rounded-full border border-white/10 hover:bg-white/5 text-xs text-white font-medium uppercase tracking-wider transition-colors"
+                            className="flex-1 h-11 rounded-full minimal-glass-subtle hover:bg-white/10 text-xs text-white font-medium uppercase tracking-wider transition-colors cursor-pointer"
                           >
                             Cancelar
                           </button>
@@ -982,7 +983,7 @@ export function AdminPanel({ onAdminStateChange, activeProjectToEdit, onCloseEdi
                             type="button"
                             onClick={handleSaveProject}
                             disabled={!editTitle.trim() || isSyncing}
-                            className="flex-1 h-11 rounded-full bg-white hover:bg-white/90 text-black text-xs font-semibold uppercase tracking-wider transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                            className="flex-1 h-11 rounded-full minimal-glass-button text-xs font-semibold uppercase tracking-wider transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
                           >
                             <span>Salvar</span>
                           </button>

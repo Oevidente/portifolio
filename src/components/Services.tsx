@@ -33,15 +33,13 @@ export function Services() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ delay: idx * 0.1, duration: 0.6 }}
-                className={`${colSpan} bg-[#111319] border border-white/10 hover:border-white/25 p-8 flex flex-col justify-between rounded-xl transition-all duration-300 group relative overflow-hidden`}
+                className={`${colSpan} minimal-glass minimal-glass-interactive p-8 flex flex-col justify-between rounded-2xl group relative overflow-hidden`}
               >
-                {idx === 0 && <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-transparent pointer-events-none" />}
-                
                 <div className="relative z-10 w-full">
-                  <div className="w-12 h-12 border border-white/10 rounded-lg flex items-center justify-center text-white/80 mb-6 group-hover:bg-white group-hover:text-black transition-all">
+                  <div className="w-12 h-12 minimal-glass-subtle rounded-xl flex items-center justify-center text-white/80 mb-6 group-hover:bg-white group-hover:text-black transition-all">
                     <Icon size={20} strokeWidth={1.5} />
                   </div>
-                  <span className="text-[10px] uppercase font-mono tracking-[0.2em] text-indigo-300 mb-1 block">
+                  <span className="text-[10px] uppercase tracking-[0.2em] text-white/50 mb-1 block font-medium">
                     {service.title}
                   </span>
                   <p className="text-sm text-white/70 leading-relaxed font-light mt-2">

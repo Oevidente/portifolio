@@ -105,10 +105,10 @@ export function LiquidGlassDock({ onAdminToggle }: LiquidGlassDockProps) {
           className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 max-w-[92vw] md:max-w-md w-full"
         >
           {/* Main Floating Glass Capsule Dock */}
-          <div className="liquid-glass rounded-full p-2 flex items-center justify-between shadow-2xl relative gap-2 h-14">
+          <div className="minimal-glass rounded-full p-1.5 flex items-center justify-between shadow-2xl relative gap-2 h-14">
             
             {/* Top edge glare sheen line */}
-            <div className="absolute top-[1.5px] left-6 right-6 h-[0.7px] bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-full pointer-events-none" />
+            <div className="absolute top-[1px] left-6 right-6 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-full pointer-events-none" />
 
             {/* Back to top item */}
             <button
@@ -124,7 +124,7 @@ export function LiquidGlassDock({ onAdminToggle }: LiquidGlassDockProps) {
                 <motion.div
                   layoutId="dockPill"
                   transition={{ type: "spring", stiffness: 220, damping: 24 }}
-                  className="absolute inset-0 liquid-glass-active rounded-full"
+                  className="absolute inset-0 minimal-glass-active rounded-full"
                 />
               )}
               <ArrowUp size={15} className="relative z-10" />
@@ -143,7 +143,7 @@ export function LiquidGlassDock({ onAdminToggle }: LiquidGlassDockProps) {
                   <a
                     key={item.id}
                     href={item.href}
-                    className={`relative flex-1 flex flex-col items-center justify-center h-10 rounded-full cursor-pointer select-none transition-all duration-300 hover:scale-[1.08] active:scale-95 ${
+                    className={`relative flex-1 flex flex-col items-center justify-center h-10 rounded-full cursor-pointer select-none transition-all duration-300 hover:scale-[1.05] active:scale-95 ${
                       isActive ? 'text-white font-medium' : 'text-white/40 hover:text-white/80'
                     }`}
                   >
@@ -151,14 +151,14 @@ export function LiquidGlassDock({ onAdminToggle }: LiquidGlassDockProps) {
                       <motion.div
                         layoutId="dockPill"
                         transition={{ type: "spring", stiffness: 220, damping: 24 }}
-                        className="absolute inset-0 liquid-glass-active rounded-full"
+                        className="absolute inset-0 minimal-glass-active rounded-full"
                       />
                     )}
                     
                     {/* Visual icon label pairing */}
                     <div className="relative z-10 flex items-center gap-1.5 px-3">
                       <Icon size={14} />
-                      <span className="hidden xs:inline text-[9px] uppercase tracking-widest font-semibold">{item.label}</span>
+                      <span className="hidden xs:inline text-[10px] uppercase tracking-widest font-semibold">{item.label}</span>
                     </div>
                   </a>
                 );
@@ -176,10 +176,10 @@ export function LiquidGlassDock({ onAdminToggle }: LiquidGlassDockProps) {
                   ? 'text-emerald-400 bg-emerald-500/10 border border-emerald-500/20' 
                   : 'text-white/40 hover:text-white/80 hover:bg-white/[0.04]'
               }`}
-              title={isAdmin ? "Administrador Activo (Clique para abrir painel)" : "Acesso Restrito ao Autor"}
+              title={isAdmin ? "Administrador Ativo (Clique para abrir painel)" : "Acesso Restrito ao Autor"}
             >
               {isAdmin ? (
-                <Unlock size={14} className="animate-pulse" />
+                <Unlock size={14} />
               ) : (
                 <Lock size={14} />
               )}
