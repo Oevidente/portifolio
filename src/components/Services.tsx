@@ -1,7 +1,10 @@
 import { motion } from 'motion/react';
 import { services } from '../data';
+import { useLanguage } from '../i18n/LanguageContext';
 
 export function Services() {
+  const { t, getService } = useLanguage();
+
   return (
     <section id="servicos" className="py-24 px-6 w-full max-w-[1024px] mx-auto">
       <div className="w-full">
@@ -11,15 +14,18 @@ export function Services() {
            viewport={{ once: true, margin: "-100px" }}
            className="mb-8 border-b border-white/10 pb-6"
         >
-          <span className="text-[10px] uppercase tracking-[0.3em] text-white/40 mb-2 block">Especialidades</span>
+          <span className="text-[10px] uppercase tracking-[0.3em] text-white/40 mb-2 block">
+            {t('services_kicker')}
+          </span>
           <h2 className="text-3xl md:text-4xl font-light tracking-tighter uppercase text-[#f0f0f0]">
-            Expertise
+            {t('services_title')}
           </h2>
         </motion.div>
 
         {/* Bento grid approach for services */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
-          {services.map((service, idx) => {
+          {services.map((rawService, idx) => {
+            const service = getService(rawService);
             const Icon = service.icon;
             // 5 items: Row 1 has 2 items (col-span-7, col-span-5), Row 2 has 3 items (col-span-4 each)
             let colSpan = "md:col-span-4";
@@ -54,3 +60,4 @@ export function Services() {
     </section>
   );
 }
+

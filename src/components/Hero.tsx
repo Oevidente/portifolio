@@ -1,7 +1,10 @@
 import { motion } from 'motion/react';
 import { ArrowDownRight } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
 
 export function Hero() {
+  const { t } = useLanguage();
+
   return (
     <section className="relative min-h-[70vh] flex flex-col justify-center px-6 pt-32 max-w-[1024px] mx-auto">
       <div className="w-full relative z-10 flex flex-col md:flex-row gap-8 items-start md:items-end justify-between">
@@ -12,10 +15,12 @@ export function Hero() {
              transition={{ duration: 0.8 }}
              className="mb-8"
           >
-            <span className="text-[10px] uppercase tracking-[0.3em] text-white/40 mb-2 block">— Status</span>
+            <span className="text-[10px] uppercase tracking-[0.3em] text-white/40 mb-2 block">
+              {t('hero_status_kicker')}
+            </span>
             <div className="minimal-glass px-3.5 py-1.5 rounded-full inline-flex items-center gap-2 text-xs text-white/90">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-              <span>Disponível para projetos</span>
+              <span>{t('hero_status_available')}</span>
             </div>
           </motion.div>
 
@@ -25,8 +30,8 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.1 }}
             className="text-5xl md:text-7xl font-light tracking-tighter uppercase text-[#f0f0f0] leading-[1.0]"
           >
-            Visual Design <br />
-            <span className="text-white/30">&</span> Experiências
+            {t('hero_title_line1')} <br />
+            <span className="text-white/30">{t('hero_title_amp')}</span> {t('hero_title_line2')}
           </motion.h1>
 
           <motion.p 
@@ -35,7 +40,7 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="mt-8 text-sm md:text-base text-white/60 max-w-xl font-light leading-relaxed"
           >
-            Sou André Luiz Alves, Designer Gráfico e Digital (PJ / Freelancer). Desenvolvo landing pages, artes para capas de jogos, mídias sociais, identidades visuais e peças impressas para marcas e projetos de referência.
+            {t('hero_bio')}
           </motion.p>
         </div>
         
@@ -46,7 +51,7 @@ export function Hero() {
           className="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto mt-8 md:mt-0"
         >
           <a href="#trabalhos" className="w-full sm:w-auto px-7 py-3.5 minimal-glass-button rounded-xl text-xs uppercase tracking-widest font-bold flex items-center justify-center gap-2 group">
-            Ver Trabalhos
+            {t('hero_cta')}
             <ArrowDownRight size={16} className="group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-transform" />
           </a>
         </motion.div>
@@ -57,3 +62,4 @@ export function Hero() {
     </section>
   );
 }
+

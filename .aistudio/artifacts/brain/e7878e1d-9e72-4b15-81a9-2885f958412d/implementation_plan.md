@@ -1,125 +1,81 @@
-# Plano de Unificação Visual: Minimal Glass & Minimalismo Híbrido
+# Sistema de Tradução Bilíngue Global (PT-BR / EN)
 
-O objetivo desta evolução de design é eliminar a fragmentação estética entre os blocos 100% sólidos/escuros e os elementos isolados de "liquid glass" pesado, consolidando uma **linguagem visual híbrida e coesa (Minimal Glass)** aplicada de ponta a ponta: do Header e Dock flutuante aos Cards, Modais, Galerias e Formulários.
-
----
+Implementação de um sistema de internacionalização nativo, de alta precisão e custo zero para o portfólio global de André Luiz, permitindo alternar instantaneamente entre Português e Inglês com persistência local e detecção automática do navegador.
 
 ### Decisões Confirmadas com o Usuário
 
-- **Estilo Base**: *Minimal Glass* — vidro fosco neutro com desfoque moderado (`backdrop-blur-xl` / 20–24px), transparência equilibrada (`rgba(14, 15, 20, 0.72)`) e bordas ultrafinas (`border-white/10`).
-- **Geometria & Raios**: Arredondamento progressivo padronizado — contêineres e modais com raio de `24px` a `28px` (`rounded-3xl`), cards e painéis internos com `16px` a `20px` (`rounded-2xl`) e botões/chips interativos com `10px` a `14px` (`rounded-xl` ou `rounded-full` para controles de transporte).
-- **Tratamento de Luz e Profundidade**: Bisel superior sutil de luz (`inset 0 1px 0 rgba(255, 255, 255, 0.12)` a `0.15`), removendo o brilho colorido saturado ou discrepâncias de plástico/3D pesado em favor de uma profundidade óptica refinada e monocromática.
+> [!IMPORTANT]
+> As seguintes escolhas de arquitetura e interface foram definidas com base nas respostas do usuário:
+
+- **Localização do Seletor de Idioma**: Posicionado de forma limpa e minimalista exclusivamente no cabeçalho superior fixo (`Header.tsx`), mantendo a elegância visual do topo e sem poluir o dock flutuante inferior.
+- **Detecção Inicial & Persistência**: Detecção inteligente via `navigator.language` no primeiro acesso (visitantes que não falam português recebem a versão em inglês automaticamente), com persistência no `localStorage` para manter a escolha do visitante.
+- **Estratégia de Tradução de Conteúdo**: Dicionário bilíngue nativo e tipado em TypeScript, cobrindo com precisão editorial 100% dos dados dos 16 projetos (títulos, subtítulos, categorias, descrições detalhadas, destaques/highlights, tags e notas de UX), serviços, seções institucionais e estudos de caso, sem alterar o fluxo do painel administrativo e sem custo algum de API.
 
 ---
 
-## 1. Visão Geral e Conceito do Novo Estilo
+## 1. Visão Geral & Escopo
 
-### A. O Paradigma "Minimal Glass"
-Em vez de alternar elementos planos e opacos (ex: `#111319` rígido) com elementos super reflexivos ou pílulas isoladas, cada superfície estrutural passa a obedecer a um padrão harmônico de 3 camadas:
-1. **Superfície Base (Canvas)**: Fundo escuro absoluto profundo (`#08080a`), com gradientes de ambientação neutros e imperceptíveis.
-2. **Camada de Vidro Estrutural (Minimal Glass Surface)**: Desfoque sutil (`backdrop-blur-xl`), fundo translúcido escuro e borda de 1px com degradê sutil (destaque na crista superior e suave na base).
-3. **Iluminação de Bisel (Specular Rim Highlight)**: Sombra interna superior que simula refração de luz no topo da borda de vidro (`box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12)`).
-
-```
-┌────────────────────────────────────────────────────────┐  ◄── Crista Iluminada (inset 0 1px 0 rgba(255,255,255,0.14))
-│  [ Minimal Glass Surface: rgba(14, 15, 20, 0.72) ]     │  ◄── Backdrop Blur (20px) + Hairline Border
-│                                                        │
-│  ┌───────────────────────────┐                         │
-│  │ Inner Element / Action    │ ◄── Progressive Radius Math: R_inner = R_outer - padding
-│  └───────────────────────────┘                         │
-└────────────────────────────────────────────────────────┘
-```
+### O Que a Solução Oferece
+- **Zero Custo de API ou Banco de Dados**: A internacionalização opera 100% no cliente com um `LanguageContext` reativo e dicionários estruturados. Nenhuma requisição desnecessária ao Firestore é realizada, preservando a cota diária do banco de dados.
+- **Tradução Integral & Fluida**: Tradução instantânea sem recarregamento da página, abrangendo:
+  - Navegação do cabeçalho e rodapé.
+  - Seção Hero (status, chamada principal, bio resumida e botões).
+  - Seção Especialidades (títulos e descrições dos serviços).
+  - Filtros interativos de categoria ('Todos' / 'All', 'UI/UX Design', 'Identidade Visual' / 'Brand Identity', 'Social Media', 'Peças Gráficas' / 'Print & Graphic Design').
+  - Todos os 16 projetos com badges, títulos, subtítulos, resumos, estudos de caso completos, listas de destaques técnicos, tags e notas de UX.
+  - Modal de visualização detalhada de estudo de caso e galeria.
+  - Seção Sobre Mim (entregáveis, clientes de referência, segmentos e trajetórias).
+  - Feedbacks de interação, botões de ação e créditos.
 
 ---
 
-## 2. Arquitetura do Sistema de Design (Tokens & Classes Globais)
+## 2. Experiência do Usuário & Design Visual
 
-No arquivo `src/index.css`, criaremos as classes utilitárias e variáveis semânticas que alimentarão todos os componentes:
+### Fluxo de Interação
+1. **Primeiro Acesso**: O sistema avalia a linguagem do navegador do visitante. Se for em inglês ou qualquer idioma estrangeiro, o site é apresentado em inglês. Se for em português, é apresentado em português.
+2. **Alternância Manual**: No canto direito do cabeçalho de vidro líquido (`minimal-glass`), um seletor sutil `PT | EN` permite alternar com um clique. A mudança atualiza todos os componentes reativamente em menos de 10ms.
+3. **Persistência**: A preferência é memorizada na chave `portfolio_lang` do navegador para futuras sessões.
 
-- `.minimal-glass`: Superfície principal translúcida para cards, modais e barras flutuantes (`bg-[rgba(13,14,19,0.72)]`, `backdrop-blur-xl`, `border border-white/10`, `shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]`).
-- `.minimal-glass-hover`: Transição suave para interação em cards e botões (`hover:bg-[rgba(22,24,32,0.85)]`, `hover:border-white/20`, `hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_12px_32px_rgba(0,0,0,0.5)]`).
-- `.minimal-glass-active`: Estado ativo/selecionado em abas, categorias e botões ativos (`bg-white/10`, `border-white/25`, `shadow-[inset_0_1px_0_rgba(255,255,255,0.25)]`).
-- `.minimal-glass-overlay`: Fundo de modais e lightboxes com desfoque profundo e escurecimento cinematográfico (`bg-black/75`, `backdrop-blur-md`).
-
----
-
-## 3. Roteiro de Aplicação Etapa por Etapa
-
-### Etapa 1: Base Global & Tipografia (`index.css`)
-- Atualizar tokens no `src/index.css` com as classes utilitárias `.minimal-glass`, `.minimal-glass-hover`, `.minimal-glass-active`.
-- Padronizar sombras de bisel e refração superior.
-- Garantir contraste estrito WCAG AA para textos secundários e metadados.
-
-### Etapa 2: Menus de Navegação & Dock Flutuante
-- **Header (`Header.tsx`)**:
-  - Hibridizar a barra superior: substituir o estilo plano/pill genérico pelo contêiner `.minimal-glass` com curvatura `rounded-2xl` / `rounded-full` equilibrada.
-  - O botão de ação "Entrar em contato" passa a ter acabamento híbrido de alto contraste (branco fosco com bisel fino de luz em vez de pílula sólida crua).
-  - Menu mobile retrátil: converter o dropdown para o mesmo contêiner `minimal-glass` com curvatura consistente (`rounded-2xl`).
-- **Liquid Glass Dock (`LiquidGlassDock.tsx`)**:
-  - Ajustar o dock flutuante inferior para a mesma paleta e desfoque do Minimal Glass, mantendo a responsividade e o tracking de rolagem, mas unificando suas bordas, sombra e curvatura aos demais menus.
-
-### Etapa 3: Hero Section & Chamadas de Ação (`Hero.tsx`)
-- Status "Disponível para projetos": substituir a caixa plana com borda simples por um badge minimal glass sutil sem efeito pill agressivo (metadado tipográfico refinado com bisel de luz discreto).
-- Botão "Ver Trabalhos": aplicar o estilo híbrido premium com bisel de luz superior e transição refinada no hover.
-- Linha divisória: harmonizar com o gradiente suave de luz do novo sistema.
-
-### Etapa 4: Grid de Especialidades / Serviços (`Services.tsx`)
-- Bento Cards de Especialidades:
-  - Substituir o fundo rígido `#111319` com borda simples por `.minimal-glass`.
-  - Atualizar os ícones e títulos para seguir a mesma curvatura interna (`rounded-xl`).
-  - Remover gradientes artificiais desalinhados (ex: gradiente roxo isolado no card 1) em favor de uma iluminação de superfície uniforme e neutra.
-
-### Etapa 5: Filtro de Categorias & Cards de Projetos (`Projects.tsx`)
-- **Filtro de Categorias**:
-  - Unificar a barra de segmentação com o design Minimal Glass, ajustando o indicador deslizante (`activeCategoryPill`) para a nova classe `.minimal-glass-active`.
-  - Manter o botão tátil de filtro com resposta rápida e transição fluida.
-- **Cards de Projetos (Bento Grid)**:
-  - Migrar os cards de projeto de `#111319` plano para `.minimal-glass` com efeito hover fluido.
-  - Overlay de imagem com scrim de legibilidade aprimorado.
-  - Selos/metadados do card: aplicar regra *Zero-Pill Discipline* da diretriz de frontend (texto limpo com separadores sutis `·` em vez de pílulas coloridas artificiais).
-
-### Etapa 6: Seção Sobre Mim & Bento de Trajetória (`About.tsx`)
-- Harmonizar o banner de Filosofia & Visão, cards de Marcas & Clientes, Jornada Acadêmica e Experiência & Entregas com o padrão `.minimal-glass`.
-- Substituir badges e tags em formato de pílulas coloridas por metadados limpos com tipografia equilibrada e separadores elegantes.
-
-### Etapa 7: Modais, Galeria e Lightbox (`Projects.tsx`)
-- **Modal de Estudo de Caso (Case Study Modal)**:
-  - Contêiner principal com `minimal-glass`, `rounded-3xl` (24px a 28px) e borda com bisel de luz superior.
-  - Botões de fechar (`✕`), expandir e setas de navegação (`‹` `›`): botões circulares em vidro fosco neutro com feedback tátil ao clique e hover.
-  - Tira de miniaturas (Thumbnails Strip): refinada com bordas translúcidas e destaque na miniatura ativa sem saturações estridentes.
-- **Visualizador em Tela Cheia (Lightbox Viewer)**:
-  - Fundo imersivo com desfoque refinado e barra de controle flutuante com acabamento em Minimal Glass.
-
-### Etapa 8: Painel Administrativo (`AdminPanel.tsx`)
-- Modal de login e painel de gerenciamento de projetos com a mesma assinatura visual (vidro fosco neutro, campos de formulário translúcidos com borda de foco iluminada e botões de ação consistentes).
-- Tratamento de alertas e modais de confirmação de exclusão dentro da mesma coerência.
-
-### Etapa 9: Rodapé e Microinterações Finais (`Footer.tsx` e `App.tsx`)
-- Rodapé refinado com links em tipografia minimalista e separadores limpos.
-- Verificação geral de espaçamentos, raio progressivo e validação pelo compilador (`compile_applet`).
+### Estilo e Harmonia Visual
+- O botão seletor de idioma adotará a mesma linguagem minimalista de vidro líquido (`minimal-glass`) já presente no site, respeitando a paleta escura sofisticada (`#050505` e brancos translúcidos).
+- Respeito integral ao contrato de 3 zonas da barra superior (Wordmark à esquerda, Links de navegação ao centro, Ações à direita).
 
 ---
 
-## 4. Arquitetura de Componentes e Fluxo de Estilização
+## 3. Arquitetura Técnica & Estrutura de Dados
 
 ```
-┌────────────────────────────────────────────────────────────────────────┐
-│                        Design Tokens: index.css                        │
-│   .minimal-glass  │  .minimal-glass-hover  │  .minimal-glass-active    │
-└───────────────────────────────────┬────────────────────────────────────┘
-                                    │
-           ┌────────────────────────┼────────────────────────┐
-           ▼                        ▼                        ▼
-┌──────────────────────┐ ┌──────────────────────┐ ┌──────────────────────┐
-│  Navegação & Docks   │ │  Conteúdo & Bento    │ │   Modais & Galeria   │
-│  - Header.tsx        │ │  - Hero.tsx          │ │  - CaseStudyModal    │
-│  - Mobile Dropdown   │ │  - Services.tsx      │ │  - GalleryStrip      │
-│  - LiquidGlassDock   │ │  - Projects.tsx Grid │ │  - Full Lightbox     │
-│  - Category Filter   │ │  - About.tsx Bento   │ │  - AdminPanel.tsx    │
-└──────────────────────┘ └──────────────────────┘ └──────────────────────┘
+┌────────────────────────────────────────────────────────┐
+│              LanguageContext (React Context)           │
+│  - currentLang: 'pt' | 'en'                            │
+│  - setLang: (lang) => void                             │
+│  - t: (key) => string                                  │
+│  - getProjectData: (projId, lang) => ProjectData       │
+└───────────────────────────┬────────────────────────────┘
+                            │
+            ┌───────────────┴───────────────┐
+            ▼                               ▼
+┌──────────────────────────┐    ┌──────────────────────────┐
+│   UI Dictionaries        │    │ Project & Content Catalog│
+│   (locales/translations) │    │ - 16 Full Case Studies   │
+│   - Header, Hero         │    │ - 5 Services             │
+│   - Filters, Categories  │    │ - Clients & Trajectory   │
+│   - Modal controls       │    │ - Highlights & UX Notes  │
+└──────────────────────────┘    └──────────────────────────┘
 ```
 
-## 5. Garantias e Diretrizes Cumpridas
-- **Zero Custos & Sem IA**: Zero integração de LLM ou APIs com custos.
-- **Otimização de Leituras Firestore**: Nenhuma alteração nas consultas ou na lógica de cache do banco de dados, protegendo o limite diário de leituras.
-- **Zero Mocks**: Todas as interfaces utilizam dados reais já existentes no projeto.
+### Arquivos Principais Envolvidos:
+1. `src/i18n/LanguageContext.tsx`: Contexto React para disponibilizar o idioma ativo, função de alternância e hook `useLanguage()`.
+2. `src/i18n/translations.ts`: Dicionário completo de termos de interface (UI), categorias, filtros, seções e mensagens.
+3. `src/i18n/projectsTranslations.ts`: Tradução editorial precisa para os 16 projetos do acervo (títulos, subtítulos, descrições completas, destaques, tags e notas de UX).
+4. `src/components/Header.tsx`: Inclusão do toggle `PT | EN` minimalista e tradução dos links de navegação.
+5. `src/components/Hero.tsx`, `Services.tsx`, `Projects.tsx`, `About.tsx`, `Footer.tsx`: Conexão com o hook de tradução para renderização dinâmica conforme o idioma selecionado.
+
+---
+
+## 4. Plano de Validação & Testes
+
+- **Verificação de Build**: Execução de `compile_applet` para garantir ausência de erros de tipagem TypeScript.
+- **Teste de Alternância**: Validação de troca de idioma em tempo real sem renderizações supérfluas.
+- **Verificação de Cota**: Garantir que a alternância não faça chamadas adicionais ao Firestore.
+- **Inspeção de Layout**: Certificar que textos em inglês não quebrem o grid ou elementos de navegação em desktop e dispositivos móveis.

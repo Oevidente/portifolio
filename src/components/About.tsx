@@ -1,46 +1,14 @@
 import { motion } from 'motion/react';
-import { Compass, GraduationCap, Briefcase, Award, CheckCircle, Sparkles, Building2 } from 'lucide-react';
+import { Compass, GraduationCap, Briefcase, Building2, CheckCircle } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
+import { aboutTranslations } from '../i18n/projectsTranslations';
 
 export function About() {
-  const currentDeliverables = [
-    'Criar Landing Pages & Sites Responsivos',
-    'Criar Artes para Capas de Jogos & Miniaturas (.webp)',
-    'Criar Artes para Mídias Sociais & Campanhas',
-    'Criar Artes para Impressão & Materiais Promocionais',
-    'Criar Artes de Identidade Visual & Branding'
-  ];
+  const { lang, t } = useLanguage();
 
-  const referenceClients = [
-    {
-      name: 'Primavera Cerimonial',
-      description: 'Maior e mais premiado cerimonial de alto padrão de Recife',
-      badge: 'Cerimonial & Eventos'
-    },
-    {
-      name: 'Bet da Sorte',
-      description: 'Plataforma e ecossistema de jogos online / iGaming',
-      badge: 'iGaming'
-    },
-    {
-      name: 'Femina Salutem',
-      description: 'Consultoria em Amamentação, Pós-Parto, Laserterapia & Tapping',
-      badge: 'Saúde & Bem-Estar'
-    }
-  ];
-
-  const additionalClients = [
-    { name: 'FSI', segment: 'Cursinho Pré-Vestibular' },
-    { name: 'Humanas Integradas', segment: 'Cursinho Pré-Vestibular' },
-    { name: 'Hiago Dantas', segment: 'Advocacia & Direito' },
-    { name: 'Keola França', segment: 'Advocacia & Direito' },
-    { name: 'Neo Eletrônica', segment: 'Tecnologia & Eletrônica' },
-    { name: 'Dolce Cuisine', segment: 'Gastronomia & Confeitaria' },
-    { name: 'Barbos Burguer', segment: 'Gastronomia & Food Service' },
-    { name: 'Down Up', segment: 'Causa Social & Inclusão' },
-    { name: 'ENS', segment: 'Educação Escolar' },
-    { name: 'Uninassau (Tamandaré)', segment: 'Ensino Superior' },
-    { name: 'Jennifer Eleutério', segment: 'Saúde & Performance' }
-  ];
+  const currentDeliverables = aboutTranslations.deliverables[lang];
+  const referenceClients = aboutTranslations.referenceClients[lang];
+  const additionalClients = aboutTranslations.additionalClients[lang];
 
   return (
     <section id="sobre" className="py-24 px-6 w-full max-w-[1024px] mx-auto">
@@ -52,9 +20,11 @@ export function About() {
           viewport={{ once: true, margin: "-100px" }}
           className="mb-12 border-b border-white/10 pb-6"
         >
-          <span className="text-[10px] uppercase tracking-[0.3em] text-white/40 mb-2 block">Sobre Mim</span>
+          <span className="text-[10px] uppercase tracking-[0.3em] text-white/40 mb-2 block">
+            {t('about_kicker')}
+          </span>
           <h2 className="text-3xl md:text-4xl font-light tracking-tighter uppercase text-[#f0f0f0]">
-            Trajetória, Clientes & Visão
+            {t('about_title')}
           </h2>
         </motion.div>
 
@@ -73,10 +43,10 @@ export function About() {
               </div>
               <div>
                 <span className="text-[10px] uppercase tracking-[0.2em] text-white/40 block mb-1">
-                  Filosofia & Visão
+                  {t('about_philosophy_kicker')}
                 </span>
                 <p className="text-base md:text-lg text-white/90 font-light leading-relaxed italic">
-                  "Boas soluções visuais não apenas comunicam, mas também inspiram e conectam. Acredito que cada projeto deve refletir uma compreensão profunda das necessidades e desejos dos clientes, transformando conceitos em experiências visuais significativas e impactantes."
+                  {t('about_philosophy_quote')}
                 </p>
               </div>
             </div>
@@ -95,8 +65,12 @@ export function About() {
                 <Building2 size={20} />
               </div>
               <div>
-                <span className="text-[10px] uppercase tracking-widest text-white/40 block">Marcas & Clientes de Referência</span>
-                <h3 className="text-lg font-light uppercase text-white tracking-tight">Projetos & Parcerias</h3>
+                <span className="text-[10px] uppercase tracking-widest text-white/40 block">
+                  {t('about_ref_clients_kicker')}
+                </span>
+                <h3 className="text-lg font-light uppercase text-white tracking-tight">
+                  {t('about_ref_clients_title')}
+                </h3>
               </div>
             </div>
 
@@ -117,7 +91,7 @@ export function About() {
             {/* Other Notable Clients Roster */}
             <div className="mt-6 pt-6 border-t border-white/5">
               <span className="text-[10px] uppercase text-white/40 tracking-wider block mb-3">
-                Outras Marcas & Clientes Atendidos
+                {t('about_other_clients_kicker')}
               </span>
               <div className="flex flex-wrap gap-2">
                 {additionalClients.map((client, idx) => (
@@ -146,8 +120,12 @@ export function About() {
                   <GraduationCap size={20} />
                 </div>
                 <div>
-                  <span className="text-[10px] uppercase tracking-widest text-white/40 block">Formação Tecnológica</span>
-                  <h3 className="text-lg font-light uppercase text-white tracking-tight">Jornada Acadêmica</h3>
+                  <span className="text-[10px] uppercase tracking-widest text-white/40 block">
+                    {t('about_edu_kicker')}
+                  </span>
+                  <h3 className="text-lg font-light uppercase text-white tracking-tight">
+                    {t('about_edu_title')}
+                  </h3>
                 </div>
               </div>
 
@@ -160,9 +138,9 @@ export function About() {
                   </div>
                   <div className="flex-1 pb-4">
                     <span className="text-[10px] font-semibold text-white/50 block mb-1">2010</span>
-                    <h4 className="text-sm font-medium text-white">Computação Gráfica — SAGA</h4>
+                    <h4 className="text-sm font-medium text-white">{t('about_edu_2010_title')}</h4>
                     <p className="text-xs text-white/60 font-light leading-relaxed mt-1">
-                      School of Arts, Games and Animation. Imersão inicial nas artes visuais, criação digital e fundamentos gráficos.
+                      {t('about_edu_2010_desc')}
                     </p>
                   </div>
                 </div>
@@ -174,9 +152,9 @@ export function About() {
                   </div>
                   <div className="flex-1">
                     <span className="text-[10px] font-semibold text-white/50 block mb-1">2014</span>
-                    <h4 className="text-sm font-medium text-white">Técnico em Computação Gráfica — IFPE</h4>
+                    <h4 className="text-sm font-medium text-white">{t('about_edu_2014_title')}</h4>
                     <p className="text-xs text-white/60 font-light leading-relaxed mt-1">
-                      Instituto Federal de Pernambuco. Aprofundamento prático em Design, Edição de Vídeo, Fotografia e Modelagem 3D.
+                      {t('about_edu_2014_desc')}
                     </p>
                   </div>
                 </div>
@@ -198,8 +176,12 @@ export function About() {
                   <Briefcase size={20} />
                 </div>
                 <div>
-                  <span className="text-[10px] uppercase tracking-widest text-white/40 block">Atuação Profissional</span>
-                  <h3 className="text-lg font-light uppercase text-white tracking-tight">Experiência & Entregas</h3>
+                  <span className="text-[10px] uppercase tracking-widest text-white/40 block">
+                    {t('about_career_kicker')}
+                  </span>
+                  <h3 className="text-lg font-light uppercase text-white tracking-tight">
+                    {t('about_career_title')}
+                  </h3>
                 </div>
               </div>
 
@@ -212,9 +194,9 @@ export function About() {
                   </div>
                   <div className="flex-1 pb-4">
                     <span className="text-[10px] font-semibold text-white/50 block mb-1">2017</span>
-                    <h4 className="text-sm font-medium text-white">Atuação Freelancer & Co-fundador da AP Design</h4>
+                    <h4 className="text-sm font-medium text-white">{t('about_career_2017_title')}</h4>
                     <p className="text-xs text-white/60 font-light leading-relaxed mt-1">
-                      Co-fundador ao lado de Paulo José dos Santos Barbosa. Criação de identidades visuais completas, redes sociais, materiais promocionais e vinhetas animadas.
+                      {t('about_career_2017_desc')}
                     </p>
                   </div>
                 </div>
@@ -225,10 +207,14 @@ export function About() {
                     <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 ring-4 ring-emerald-500/20 shrink-0" />
                   </div>
                   <div className="flex-1">
-                    <span className="text-[10px] font-semibold text-emerald-400 block mb-1">ATUALIDADE</span>
-                    <h4 className="text-sm font-medium text-white">Designer Gráfico & Digital (PJ / Freelance)</h4>
+                    <span className="text-[10px] font-semibold text-emerald-400 block mb-1">
+                      {t('about_career_present_tag')}
+                    </span>
+                    <h4 className="text-sm font-medium text-white">
+                      {t('about_career_present_title')}
+                    </h4>
                     <p className="text-xs text-white/60 font-light leading-relaxed mt-1 mb-3">
-                      Atendimento direto a empresas e marcas de referência desenvolvendo soluções visuais completas:
+                      {t('about_career_present_desc')}
                     </p>
                     <ul className="space-y-1.5">
                       {currentDeliverables.map((item, idx) => (
@@ -248,4 +234,5 @@ export function About() {
     </section>
   );
 }
+
 

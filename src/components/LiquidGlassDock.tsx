@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Briefcase, Sparkles, Mail, Lock, Unlock, ArrowUp } from 'lucide-react';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { auth } from '../firebase';
+import { useLanguage } from '../i18n/LanguageContext';
 
 const ADMIN_EMAIL = "andreluiz1902@gmail.com";
 
@@ -11,10 +12,12 @@ interface LiquidGlassDockProps {
 }
 
 export function LiquidGlassDock({ onAdminToggle }: LiquidGlassDockProps) {
+  const { lang, t } = useLanguage();
   const [activeSection, setActiveSection] = useState<string>('hero');
   const [isAdmin, setIsAdmin] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+
 
   // Synced Auth State for active glow
   useEffect(() => {
@@ -89,9 +92,9 @@ export function LiquidGlassDock({ onAdminToggle }: LiquidGlassDockProps) {
   }, []);
 
   const dockItems = [
-    { id: 'servicos', label: 'Expertise', icon: Sparkles, href: '#servicos' },
-    { id: 'trabalhos', label: 'Trabalhos', icon: Briefcase, href: '#trabalhos' },
-    { id: 'contato', label: 'Contato', icon: Mail, href: '#contato' },
+    { id: 'servicos', label: t('dock_services'), icon: Sparkles, href: '#servicos' },
+    { id: 'trabalhos', label: t('dock_works'), icon: Briefcase, href: '#trabalhos' },
+    { id: 'contato', label: t('dock_contact'), icon: Mail, href: '#contato' },
   ];
 
   return (
@@ -118,7 +121,7 @@ export function LiquidGlassDock({ onAdminToggle }: LiquidGlassDockProps) {
                   ? 'text-white' 
                   : 'text-white/40 hover:text-white/80'
               }`}
-              title="Voltar ao início"
+              title={t('dock_top')}
             >
               {activeSection === 'hero' && (
                 <motion.div
@@ -129,6 +132,7 @@ export function LiquidGlassDock({ onAdminToggle }: LiquidGlassDockProps) {
               )}
               <ArrowUp size={15} className="relative z-10" />
             </button>
+
 
             {/* Vertical dividing line */}
             <div className="w-[1px] h-6 bg-white/10 shrink-0" />
